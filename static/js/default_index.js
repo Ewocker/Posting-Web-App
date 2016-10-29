@@ -28,7 +28,7 @@ var app = function() {
         data: {
             logged_in: false,
             has_more: false,
-            add_post_button: {
+            add_post_button: {  //using dict.attr can pass by reference
                 display: true
             }
         },
