@@ -27,33 +27,13 @@
             </button>
         </div>
 
-    {{pass}}
-
-
-        <!-- Modal -->
-        <div class="modal fade" id="postForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
+        <!--The textarea to add a new post, and its 'Post' button, should be in a div with id add-new-post.
+            The post button should say "Post" and have class post-button. -->
+        <form id="add-new-post" action="#" enctype="multipart/form-data" method="post" v-if="!add_post_button.display">
+            <div class="form-group text-right" id="submit_record__row">
+                <input class="btn btn-primary btn-sm post-button mybtn-width" type="submit" value="Post"/>
+                <span class="help-block"></span>
             </div>
-        </div>
-
-
-        <form action="#" enctype="multipart/form-data" method="post">
             <div class="form-group" id="post_post_title__row">
                 <label class="control-label"
                        for="post_post_title"
@@ -64,13 +44,17 @@
             </div>
             <div class="form-group" id="post_post_content__row">
                 <label class="control-label" for="post_post_content"
-                       id="post_post_content__label">Post
-                    Content</label>
+                       id="post_post_content__label">
+                    Post Content</label>
                 <textarea class="text form-control" cols="40" id="post_post_content" name="post_content"
                           rows="10"></textarea>
                 <span class="help-block"></span>
             </div>
         </form>
+
+    {{pass}}
+
+
     </div>
 </div>
 
