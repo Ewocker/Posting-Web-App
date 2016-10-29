@@ -1,0 +1,28 @@
+/* line 1, ../sass/_main.scss */
+.mybtn-width {
+  width: 120px;
+}
+
+/* line 5, ../sass/_main.scss */
+.post_listing {
+  margin: 10px 0px 10px 0px;
+  padding: 0 0 0 0px;
+}
+
+/* line 10, ../sass/_main.scss */
+.post_list {
+  padding-top: 10px;
+}
+
+/* line 14, ../sass/_main.scss */
+.post {
+  border-color: #cccccc;
+  border-style: solid;
+  border-width: 1px;
+  background: #eeeeee;
+  margin: 20px 0px 20px 0px;
+  padding: 20px;
+  -moz-border-radius: 16px;
+  -webkit-border-radius: 16px;
+  border-radius: 16px;
+}

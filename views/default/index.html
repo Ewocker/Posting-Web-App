@@ -1,0 +1,79 @@
+{{extend 'layout.html'}}
+
+{{block head}}
+<script src="{{=URL('static', 'js/vue.js')}}"></script>
+<script>
+    var get_posts_url = "{{=URL('api', 'get_posts', user_signature=True)}}";
+    var add_post_url = "{{=URL('api', 'add_post', user_signature=True)}}";
+    var del_post_url = "{{=URL('api', 'del_post', user_signature=True)}}";
+</script>
+{{end}}
+
+<div class="main_content">
+
+    <div id="vue-div" class="display:none">
+        <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
+    {{if auth.user_id:}}
+        <div class="text-right">
+            <button v-if="add_post_button.display"
+                    class="btn btn-danger btn-sm mybtn-width"
+                    v-on:click="button_toggle(add_post_button)">
+            {{=icon_add}} Add new post
+            </button>
+            <button v-if="!add_post_button.display"
+                    class="btn btn-warning btn-sm mybtn-width"
+                    v-on:click="button_toggle(add_post_button)">
+            {{=icon_cancel}} Cancel
+            </button>
+        </div>
+
+    {{pass}}
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="postForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <form action="#" enctype="multipart/form-data" method="post">
+            <div class="form-group" id="post_post_title__row">
+                <label class="control-label"
+                       for="post_post_title"
+                       id="post_post_title__label">
+                    Post Title</label>
+                <input class="form-control string" id="post_post_title" name="post_title" type="text" value=""/>
+                <span class="help-block"></span>
+            </div>
+            <div class="form-group" id="post_post_content__row">
+                <label class="control-label" for="post_post_content"
+                       id="post_post_content__label">Post
+                    Content</label>
+                <textarea class="text form-control" cols="40" id="post_post_content" name="post_content"
+                          rows="10"></textarea>
+                <span class="help-block"></span>
+            </div>
+        </form>
+    </div>
+</div>
+
+</div>
+
+<script src="{{=URL('static', 'js/default_index.js')}}"></script>
