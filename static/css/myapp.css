@@ -3,19 +3,19 @@
   width: 120px;
 }
 
-/* line 6, ../sass/_main.scss */
+/* line 5, ../sass/_main.scss */
 .post_listing {
   margin: 5px 0px 10px 0px;
   padding: 0 0 0 0px;
 }
 
-/* line 11, ../sass/_main.scss */
+/* line 10, ../sass/_main.scss */
 .post_list {
   padding-top: 10px;
   width: 500px;
   margin: 20px auto;
 }
-/* line 15, ../sass/_main.scss */
+/* line 14, ../sass/_main.scss */
 .post_list .post {
   border-color: #cccccc;
   border-style: solid;
@@ -27,21 +27,21 @@
   -webkit-border-radius: 16px;
   border-radius: 16px;
 }
-/* line 23, ../sass/_main.scss */
+/* line 22, ../sass/_main.scss */
 .post_list .post .post_title {
   color: #9d1e15;
   font-weight: 300;
   font-size: 25px;
   font-family: 'Coiny', cursive;
 }
-/* line 29, ../sass/_main.scss */
+/* line 28, ../sass/_main.scss */
 .post_list .post .post_content {
   font-family: 'Indie Flower', cursive;
   font-size: 18px;
   font-weight: 100;
   color: #001f3f;
 }
-/* line 35, ../sass/_main.scss */
+/* line 34, ../sass/_main.scss */
 .post_list .post .meta {
   font-family: 'Josefin Sans', sans-serif;
   width: 30%;
@@ -49,7 +49,7 @@
   color: #1b8dbb;
   display: inline-block;
 }
-/* line 42, ../sass/_main.scss */
+/* line 41, ../sass/_main.scss */
 .post_list .post .edit_icon {
   float: right;
   color: #303030;

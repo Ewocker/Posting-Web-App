@@ -39,7 +39,7 @@ var app = function () {
         $.post(add_post_url,
             {
                 title: self.vue.form_title,
-                content: self.vue.form_content
+                content: self.vue.form_content//.replace(/(?:\r\n|\r|\n)/g, '\t\n')
             },
             function (data) {
                 console.log(typeof(data.post))
@@ -66,6 +66,15 @@ var app = function () {
         button.display = !button.display
     };
 
+    self.get_user_name_email = function () {
+        $.post(get_user_and_email_url,
+            function (data) {
+                self.vue.user_name = data.user_name,
+                self.vue.user_email = data.user_email
+            }
+        );
+    }
+
 
     // Complete as needed.
     self.vue = new Vue({
@@ -79,18 +88,23 @@ var app = function () {
                 display: true
             },
             posts: [],
+            //contain:  id, title, content, author, date_created, date_updated, author_email, _idx(from enumerate())
             form_title: null,
-            form_content: null
+            form_content: null,
+            user_name: null,
+            user_email: null
         },
         methods: {
             get_more: self.get_more,
             add_post: self.add_post,
-            button_toggle: self.button_toggle
+            button_toggle: self.button_toggle,
+            get_user_name_email: self.get_user_name_email
         }
     });
 
+
     Vue.component('post', {
-        props: ['title', 'content', 'author', 'date_created', 'date_updated'],
+        props: ['title', 'content', 'author', 'date_created', 'date_updated', 'is_author_return_edit'],
         template: ' <div>\
                     <div class="post_title">{{title}}</div>\
                     <div class="post_content">{{content}}</div>\
@@ -98,9 +112,9 @@ var app = function () {
                     <div class="meta">{{date_created}}</div>\
                     <div class="meta">{{date_updated}}</div>\
                     </div>'
-    }); //the delimiter in template does not change
+    }); // ***the delimiter in template does not change
 
-
+    self.get_user_name_email();
     self.get_more(0, 4);
     $("#vue-div").show();
     return self;
