@@ -56,7 +56,7 @@ def post_response(post_obj):
         id=post_obj.id,
         title=post_obj.post_title,
         content=post_obj.post_content,
-        auther=post_obj.user_email,
+        author=post_obj.user_email,
         date_created=convertTime(post_obj.created_on),
         date_updated=timeCompare(post_obj)
     )
@@ -68,23 +68,14 @@ def get_posts():
     """This controller is used to get the posts.  Follow what we did in lecture 10, to ensure
     that the first time, we get 4 posts max, and each time the "load more" button is pressed,
     we load at most 4 more posts."""
-    # Implement me!
     start_idx = int(request.vars.start_idx) if request.get_vars.start_idx is not None else 0
     end_idx = int(request.vars.end_idx) if request.get_vars.end_idx is not None else 0
     posts = []
     has_more = False
-    # + 1 for checking has_more
-    rows = db().select(db.post.ALL, orderby=~db.post.created_on , limitby=(start_idx, end_idx + 1))
+    rows = db().select(db.post.ALL, orderby=~db.post.created_on , limitby=(start_idx, end_idx + 1)) # + 1 for checking has_more
     for i, r in enumerate(rows):
         if i < end_idx - start_idx:
-            p = dict(
-                id=r.id,
-                title=r.post_title,
-                content=r.post_content,
-                auther=r.user_email,
-                date_created=convertTime(r.created_on),
-                date_updated=timeCompare(r)
-            )
+            p = post_response(r)
             posts.append(p)
         else:
             has_more = True
@@ -108,6 +99,7 @@ def add_post():
         post_content = request.post_vars.content
     )
     inserted_post = db.post(p_id)
+    print(inserted_post.user_email)
     return response.json(dict(post=post_response(inserted_post)))
 
 
