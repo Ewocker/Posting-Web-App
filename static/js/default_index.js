@@ -34,6 +34,20 @@ var app = function () {
 
     //---------------------------------------
 
+
+    self.add_post = function () {
+        $.post(add_post_url,
+            {
+                title: self.vue.form_title,
+                content: self.vue.form_content
+            },
+            function (data) {
+                self.vue.posts.unshift(data.track);
+                enumerate(self.vue.posts);
+            }
+        );
+    };
+
     self.get_more = function () {
         var num_posts = self.vue.posts.length;
         var add_posts_num = 4;
