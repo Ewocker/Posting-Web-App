@@ -3,7 +3,7 @@
 {{block head}}
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script>
-    var get_posts_url = "{{=URL('api', 'get_posts', user_signature=True)}}";
+    var get_more_posts_url = "{{=URL('api', 'get_posts')}}";
     var add_post_url = "{{=URL('api', 'add_post', user_signature=True)}}";
     var del_post_url = "{{=URL('api', 'del_post', user_signature=True)}}";
 </script>
@@ -14,6 +14,7 @@
     <div id="vue-div" class="display:none">
         <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
     {{if auth.user_id:}}
+        <!--ADD POST BUTTON-->
         <div class="text-right">
             <button v-if="add_post_button.display"
                     class="btn btn-danger btn-sm mybtn-width"
@@ -27,6 +28,7 @@
             </button>
         </div>
 
+        <!--ADD POST FORM-->
         <!--The textarea to add a new post, and its 'Post' button, should be in a div with id add-new-post.
             The post button should say "Post" and have class post-button. -->
         <form id="add-new-post" action="#" enctype="multipart/form-data" method="post" v-if="!add_post_button.display">
@@ -51,8 +53,18 @@
                 <span class="help-block"></span>
             </div>
         </form>
-
     {{pass}}
+
+
+        <!--POSTS Listing-->
+        <div class="post_list">
+            <div v-for="p in posts" class="post text-left">
+                <post :title="p.title" :content="p.content" :author="p.author" :date_created="p.date_created" date_updated="p.date_updated"></post>
+            </div>
+        </div>
+        <div v-if="has_more" class="text-center">
+            <button id="load_more" class="btn btn-default btn-sm mybtn-width" v-on:click="get_more()">Load more</button>
+        </div>
 
 
     </div>

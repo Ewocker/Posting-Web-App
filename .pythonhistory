@@ -1,0 +1,19 @@
+import os
+os.getcwd()
+db(db.auth_user).select()
+class MyClass(object): pass
+;
+class MyClass(object): pass
+myinstance = MyClass()
+myinstance.x = 'something'
+a = [1 ,2, {'hello':'world'}, [3, 4, [myinstance]]]
+import cPickle
+b = cPickle.dumps(a)
+a = [1 ,2, {'hello':'world'}, [3, 4]]]
+b = cPickle.dumps(a)
+a = [1 ,2, {'hello':'world'}, [3, 4]]
+b = cPickle.dumps(a)
+b
+db
+import db
+quit()
