@@ -12,6 +12,7 @@
 <div class="main_content">
 
     <div id="vue-div" class="display:none">
+
         <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
     {{if auth.user_id:}}
         <!--ADD POST BUTTON-->
@@ -31,7 +32,8 @@
         <!--ADD POST FORM-->
         <!--The textarea to add a new post, and its 'Post' button, should be in a div with id add-new-post.
             The post button should say "Post" and have class post-button. -->
-        <form id="add-new-post" action="#" enctype="multipart/form-data" method="post" v-if="!add_post_button.display">
+        <form id="add-new-post" v-on:submit.prevent="add_post" action="#" enctype="multipart/form-data" method="post"
+              v-if="!add_post_button.display">
             <div class="form-group text-right" id="submit_record__row">
                 <input class="btn btn-primary btn-sm post-button mybtn-width" type="submit" value="Post"/>
                 <span class="help-block"></span>
@@ -41,14 +43,16 @@
                        for="post_post_title"
                        id="post_post_title__label">
                     Post Title</label>
-                <input class="form-control string" id="post_post_title" name="post_title" type="text" value=""/>
+                <input v-model="form_title" class="form-control string" id="post_post_title" name="post_title"
+                       type="text" value=""/>
                 <span class="help-block"></span>
             </div>
             <div class="form-group" id="post_post_content__row">
                 <label class="control-label" for="post_post_content"
                        id="post_post_content__label">
                     Post Content</label>
-                <textarea class="text form-control" cols="40" id="post_post_content" name="post_content"
+                <textarea v-model="form_content" class="text form-control" cols="40" id="post_post_content"
+                          name="post_content"
                           rows="10"></textarea>
                 <span class="help-block"></span>
             </div>
@@ -59,7 +63,8 @@
         <!--POSTS Listing-->
         <div class="post_list">
             <div v-for="p in posts" class="post text-left">
-                <post :title="p.title" :content="p.content" :author="p.author" :date_created="p.date_created" :date_updated="p.date_updated"></post>
+                <post :title="p.title" :content="p.content" :author="p.author" :date_created="p.date_created"
+                      :date_updated="p.date_updated"></post>
             </div>
         </div>
         <div v-if="has_more" class="text-center">

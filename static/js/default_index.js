@@ -42,8 +42,10 @@ var app = function () {
                 content: self.vue.form_content
             },
             function (data) {
-                self.vue.posts.unshift(data.track);
+                console.log(typeof(data.post))
+                self.vue.posts.unshift(data.post);
                 enumerate(self.vue.posts);
+                self.button_toggle(self.vue.add_post_button);
             }
         );
     };
@@ -76,10 +78,13 @@ var app = function () {
             add_post_button: {  //using dict.attr can pass by reference
                 display: true
             },
-            posts: []
+            posts: [],
+            form_title: null,
+            form_content: null
         },
         methods: {
             get_more: self.get_more,
+            add_post: self.add_post,
             button_toggle: self.button_toggle
         }
     });

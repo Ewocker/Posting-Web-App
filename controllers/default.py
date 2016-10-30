@@ -99,15 +99,19 @@ def index():
     db.post.insert(post_title="DUMMY TITLE4", post_content="dummy content!")
     db.post.insert(post_title="DUMMY TITLE5", post_content="dummy content!")
     db.post.insert(post_title="DUMMY TITLE6", post_content="dummy content!")
-    posts = db(db.post).select()
-
-    return dict(posts=posts,
-                user_name=get_user_name_from_email,
-                convertTime=convertTime,
-                isAuther= isAuther,
-                updateTime=updateTime,
-                timeCompare=timeCompare)
-
+    db.post.insert(post_title="DUMMY TITLE7", post_content="dummy content!")
+    db.post.insert(post_title="DUMMY TITLE8", post_content="dummy content!")
+    db.post.insert(post_title="DUMMY TITLE9", post_content="dummy content!")
+    db.post.insert(post_title="DUMMY TITLE10", post_content="dummy content!")
+    # posts = db(db.post).select()
+    #
+    # return dict(posts=posts,
+    #             user_name=get_user_name_from_email,
+    #             convertTime=convertTime,
+    #             isAuther= isAuther,
+    #             updateTime=updateTime,
+    #             timeCompare=timeCompare)
+    return dict()
 
 @auth.requires_login()
 def edit():

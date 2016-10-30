@@ -51,6 +51,17 @@ def timeCompare(p):
         time += 'second ' if delta.seconds==1 else 'seconds '
     return time + ' ago'
 
+def post_response(post_obj):
+    p = dict(
+        id=post_obj.id,
+        title=post_obj.post_title,
+        content=post_obj.post_content,
+        auther=post_obj.user_email,
+        date_created=convertTime(post_obj.created_on),
+        date_updated=timeCompare(post_obj)
+    )
+    return p
+
 #---------------------------------------------------
 
 def get_posts():
@@ -63,10 +74,10 @@ def get_posts():
     posts = []
     has_more = False
     # + 1 for checking has_more
-    rows = db().select(db.post.ALL, limitby=(start_idx, end_idx + 1))
+    rows = db().select(db.post.ALL, orderby=~db.post.created_on , limitby=(start_idx, end_idx + 1))
     for i, r in enumerate(rows):
         if i < end_idx - start_idx:
-            t = dict(
+            p = dict(
                 id=r.id,
                 title=r.post_title,
                 content=r.post_content,
@@ -74,7 +85,7 @@ def get_posts():
                 date_created=convertTime(r.created_on),
                 date_updated=timeCompare(r)
             )
-            posts.append(t)
+            posts.append(p)
         else:
             has_more = True
     logged_in = auth.user_id is not None
@@ -92,8 +103,12 @@ def get_posts():
 def add_post():
     """Here you get a new post and add it.  Return what you want."""
     # Implement me!
-
-    return response.json(dict())
+    p_id = db.post.insert(
+        post_title = request.post_vars.title,
+        post_content = request.post_vars.content
+    )
+    inserted_post = db.post(p_id)
+    return response.json(dict(post=post_response(inserted_post)))
 
 
 @auth.requires_signature()
