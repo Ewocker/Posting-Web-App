@@ -51,7 +51,12 @@
 }
 /* line 41, ../sass/_main.scss */
 .post_list .post .edit_icon {
+  display: inline-block;
   float: right;
   color: #303030;
   text-shadow: 1px 1px 1px #ccc;
+}
+/* line 46, ../sass/_main.scss */
+.post_list .post .edit_icon .icon {
+  margin: 4px;
 }

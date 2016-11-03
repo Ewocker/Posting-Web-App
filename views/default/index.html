@@ -64,8 +64,15 @@
         <!--POSTS Listing-->
         <div class="post_list">
             <div v-for="p in posts" class="post text-left">
-                <post :title="p.title" :content="p.content" :author="p.author" :date_created="p.date_created"
-                      :date_updated="p.date_updated"></post>
+                <post :title="p.title"
+                      :content="p.content"
+                      :author="p.author"
+                      :author_email="p.author_email"
+                      :date_created="p.date_created"
+                      :date_updated="p.date_updated"
+                      :user_email="user_email"
+                      :add_post_button="add_post_button"
+                      :button_toggle="button_toggle"></post>
             </div>
         </div>
         <div v-if="has_more" class="text-center">

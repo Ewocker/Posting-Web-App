@@ -39,9 +39,13 @@
       display: inline-block;
     }
     .edit_icon {
+      display: inline-block;
       float: right;
       color: #303030;
       text-shadow: 1px 1px 1px #ccc;
+      .icon{
+        margin: 4px;
+      }
     }
   }
 }

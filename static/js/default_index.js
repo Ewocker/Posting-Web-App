@@ -46,6 +46,10 @@ var app = function () {
                 self.vue.posts.unshift(data.post);
                 enumerate(self.vue.posts);
                 self.button_toggle(self.vue.add_post_button);
+                // clear form values
+                console.log('form cleared');
+                self.vue.form_title = null;
+                self.vue.form_content = null;
             }
         );
     };
@@ -104,10 +108,21 @@ var app = function () {
 
 
     Vue.component('post', {
-        props: ['title', 'content', 'author', 'date_created', 'date_updated', 'is_author_return_edit'],
+        props: ['title', 'content', 'author', 'author_email',
+                'date_created', 'date_updated', 'is_author_return_edit',
+                'user_email', 'add_post_button', 'button_toggle'],
         template: ' <div>\
                     <div class="post_title">{{title}}</div>\
-                    <div class="post_content">{{content}}</div>\
+                    <div class="post_content">{{content}}\
+                        <div  class="edit_icon" v-if="user_email==author_email">\
+                            <a href="#" v-on:click="button_toggle(add_post_button)">\
+                                <i class="fa fa-pencil icon"></i>\
+                            </a>\
+                            <a>\
+                                <i class="fa fa-trash-o icon"></i>\
+                            </a>\
+                        </div>\
+                    </div>\
                     <div class="meta">{{author}}</div>\
                     <div class="meta">{{date_created}}</div>\
                     <div class="meta">{{date_updated}}</div>\
