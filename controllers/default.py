@@ -30,17 +30,21 @@ def index():
     # most recent first, and you need to return that list here.
     # Note that posts is NOT a list of strings in your actual code; it is
     # what you get from a db(...).select(...).
-    db.post.truncate()
-    db.post.insert(post_title="DUMMY TITLE1", post_content="dummy content!", user_email="Default Author")
-    db.post.insert(post_title="DUMMY TITLE2", post_content="dummy content!", user_email="Default Author")
-    db.post.insert(post_title="DUMMY TITLE3", post_content="dummy content!", user_email="Default Author")
-    db.post.insert(post_title="DUMMY TITLE4", post_content="dummy content!", user_email="Default Author")
-    db.post.insert(post_title="DUMMY TITLE5", post_content="dummy content!", user_email="Default Author")
-    db.post.insert(post_title="DUMMY TITLE6", post_content="dummy content!", user_email="Default Author")
-    db.post.insert(post_title="DUMMY TITLE7", post_content="dummy content!", user_email="Default Author")
-    db.post.insert(post_title="DUMMY TITLE8", post_content="dummy content!", user_email="Default Author")
-    db.post.insert(post_title="DUMMY TITLE9", post_content="dummy content!", user_email="Default Author")
-    db.post.insert(post_title="DUMMY TITLE10", post_content="dummy content!", user_email="Default Author")
+
+    # # Test
+    # db.post.truncate()
+    # db.post.insert(post_title="DUMMY TITLE1", post_content="dummy content!", user_email="Default Author")
+    # db.post.insert(post_title="DUMMY TITLE2", post_content="dummy content!", user_email="Default Author")
+    # db.post.insert(post_title="DUMMY TITLE3", post_content="dummy content!", user_email="Default Author")
+    # db.post.insert(post_title="DUMMY TITLE4", post_content="dummy content!", user_email="Default Author")
+    # db.post.insert(post_title="DUMMY TITLE5", post_content="dummy  content!", user_email="Default Author")
+    # db.post.insert(post_title="DUMMY TITLE6", post_content="dummy content!", user_email="Default Author")
+    # db.post.insert(post_title="DUMMY TITLE7", post_content="dummy content!", user_email="Default Author")
+    # db.post.insert(post_title="DUMMY TITLE8", post_content="dummy content!", user_email="Default Author")
+    # db.post.insert(post_title="DUMMY TITLE9", post_content="dummy content!", user_email="Default Author")
+    # db.post.insert(post_title="DUMMY TITLE10", post_content="dummy content!", user_email="Default Author")
+    #
+
     # posts = db(db.post).select()
     #
     # return dict(posts=posts,

@@ -23,7 +23,6 @@ var app = function () {
         });
     };
 
-
     function get_posts_url(start_idx, end_idx) {
         var param = {
             start_idx: start_idx,
@@ -35,7 +34,7 @@ var app = function () {
     //---------------------------------------
 
     self.action = function (id) {
-        if (id == 0){
+        if (id == 0) {
             self.vue.action_post = 0;
         } else {
             self.vue.action_post = id;
@@ -43,7 +42,7 @@ var app = function () {
     };
 
     self.add_or_edit = function () {
-        if (self.vue.action_post == 0){
+        if (self.vue.action_post == 0) {
             self.add_post();
         } else {
             self.update_post();
@@ -86,10 +85,9 @@ var app = function () {
             },
             function (data) {
                 console.log(self.vue.action_post + ' success');
-                for(i=0; i < self.vue.posts.length; i++){
-                    if (self.vue.posts[i].id == data.post.id){
-                        self.vue.posts[i].title = data.post.title;
-                        self.vue.posts[i].content = data.post.content;
+                for (i = 0; i < self.vue.posts.length; i++) {
+                    if (self.vue.posts[i].id == data.post.id) {
+                        self.vue.posts[i] = data.post;
                         break;
                     }
                 }
@@ -125,7 +123,7 @@ var app = function () {
                     self.vue.user_email = data.user_email
             }
         );
-    }
+    };
 
     self.edit_post = function (title, content) {
         self.button_toggle(self.vue.add_post_button);
@@ -136,12 +134,30 @@ var app = function () {
             self.vue.form_title = null;
             self.vue.form_content = null;
         }
-    }
+    };
+
+    self.delete_post = function (id) {
+        $.post(del_post_url,
+            {
+                id: id
+            },
+            function () {
+                console.log(self.vue.action_post + 'delete success');
+                for (i = 0; i < self.vue.posts.length; i++) {
+                    if (self.vue.posts[i].id == id) {
+                        self.vue.posts.splice(i, 1);
+                        break;
+                    }
+                }
+                enumerate(self.vue.posts);
+            }
+        );
+    };
 
     self.clear_form = function () {
         self.vue.form_title = null;
         self.vue.form_content = null;
-    }
+    };
 
 
     // Complete as needed.
@@ -153,7 +169,7 @@ var app = function () {
             logged_in: false,
             has_more: false,
             add_post_button: {  //using dict.attr can pass by reference
-                display: true,
+                display: true
             },
             posts: [],
             //contain:  id, title, content, author, date_created, date_updated, author_email, _idx(from enumerate())
@@ -174,30 +190,36 @@ var app = function () {
             disable_edit: self.disable_edit,
             enable_edit: self.enable_edit,
             action: self.action,
-            add_or_edit: self.add_or_edit
+            add_or_edit: self.add_or_edit,
+            delete_post: self.delete_post
         }
     });
 
 
     Vue.component('post', {
-        props: ['post', 'title', 'content', 'author', 'author_email',
-            'date_created', 'date_updated', 'is_author_return_edit',
-            'user_email', 'edit_post', 'clear_form', 'editing', 'action', 'id'],
+        props: ['post',
+            'user_email',
+            'date_created',
+            'edit_post',
+            'clear_form',
+            'editing',
+            'action',
+            'delete_post'],
         template: ' <div class="post-content">\
-                    <div class="post_title">{{title}}</div>\
-                    <div class="post_content">{{content}}\
-                        <div  class="edit_icon" v-if="user_email==author_email">\
-                            <a href="#" v-on:click="edit_post(title, content); action(id); " v-if="!editing">\
+                    <div class="post_title">{{post.title}}</div>\
+                    <div class="post_content">{{post.content}}\
+                        <div  class="edit_icon" v-if="user_email==post.author_email">\
+                            <a href="#" v-on:click="edit_post(post.title, post.content); action(post.id); " v-if="!editing">\
                                 <i class="fa fa-pencil icon"></i>\
                             </a>\
-                            <a>\
+                            <a href="#" v-on:click="delete_post(post.id);">\
                                 <i class="fa fa-trash-o icon"></i>\
                             </a>\
                         </div>\
                     </div>\
-                    <div class="meta">{{author}}</div>\
-                    <div class="meta">{{date_created}}</div>\
-                    <div class="meta">{{date_updated}}</div>\
+                    <div class="meta">{{post.author}}</div>\
+                    <div class="meta">{{post.date_created}}</div>\
+                    <div class="meta">{{post.date_updated}}</div>\
                     </div>'
     }); // ***the delimiter in template does not change
 

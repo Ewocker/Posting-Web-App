@@ -7,7 +7,7 @@
     var get_more_posts_url = "{{=URL('api', 'get_posts')}}";
     var add_post_url = "{{=URL('api', 'add_post', user_signature=True)}}";
     var del_post_url = "{{=URL('api', 'del_post', user_signature=True)}}";
-    var update_post_url = "{{=URL('api', 'update_post', user_signature=True)}}"
+    var update_post_url = "{{=URL('api', 'update_post', user_signature=True)}}";
 </script>
 {{end}}
 
@@ -72,18 +72,13 @@
         <div class="post_list">
             <div v-for="p in posts" class="post text-left">
                 <post :post="p"
-                      :title="p.title"
-                      :content="p.content"
-                      :author="p.author"
-                      :author_email="p.author_email"
-                      :date_created="p.date_created"
-                      :date_updated="p.date_updated"
                       :user_email="user_email"
                       :edit_post="edit_post"
                       :clear_form="clear_form"
                       :editing="editing"
                       :action="action"
-                      :id="p.id"></post>
+                      :delete_post="delete_post"
+                      :add_post_button="add_post_button"></post>
             </div>
         </div>
         <div v-if="has_more" class="text-center">
@@ -97,3 +92,11 @@
 </div>
 
 <script src="{{=URL('static', 'js/default_index.js')}}"></script>
+
+        <!--:title="p.title"
+                      :content="p.content"
+                      :author="p.author"
+                      :author_email="p.author_email"
+                      :date_created="p.date_created"
+                      :date_updated="p.date_updated"
+                      -->
