@@ -129,6 +129,16 @@ def add_post():
     print(inserted_post.user_email)
     return response.json(dict(post=post_response(inserted_post)))
 
+@auth.requires_signature()
+def update_post():
+    """Here you get a new post and add it.  Return what you want."""
+    # Implement me!
+    action_post = db.post(request.post_vars.id)
+    action_post.update(post_title = request.post_vars.title,
+                       post_content= request.post_vars.content)
+    print('Post:' + request.post_vars.id + ' has been updated' + str(datetime.datetime.utcnow()))
+    return response.json(dict(post=post_response(action_post)))
+
 
 @auth.requires_signature()
 def del_post():

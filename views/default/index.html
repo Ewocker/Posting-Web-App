@@ -7,6 +7,7 @@
     var get_more_posts_url = "{{=URL('api', 'get_posts')}}";
     var add_post_url = "{{=URL('api', 'add_post', user_signature=True)}}";
     var del_post_url = "{{=URL('api', 'del_post', user_signature=True)}}";
+    var update_post_url = "{{=URL('api', 'update_post', user_signature=True)}}"
 </script>
 {{end}}
 
@@ -20,12 +21,17 @@
         <div class="text-right">
             <button v-if="add_post_button.display"
                     class="btn btn-danger btn-sm mybtn-width"
-                    v-on:click="button_toggle(add_post_button)">
+                    v-on:click="button_toggle(add_post_button);
+                                clear_form();
+                                disable_edit();
+                                action(0);"> <!--action 0 refers to add-->
             {{=icon_add}} Add new post
             </button>
             <button v-if="!add_post_button.display"
                     class="btn btn-warning btn-sm mybtn-width"
-                    v-on:click="button_toggle(add_post_button)">
+                    v-on:click="button_toggle(add_post_button);
+                                clear_form();
+                                enable_edit();">
             {{=icon_cancel}} Cancel
             </button>
         </div>
@@ -33,7 +39,8 @@
         <!--ADD POST FORM-->
         <!--The textarea to add a new post, and its 'Post' button, should be in a div with id add-new-post.
             The post button should say "Post" and have class post-button. -->
-        <form id="add-new-post" v-on:submit.prevent="add_post" action="#" enctype="multipart/form-data" method="post"
+        <form id="add-new-post" v-on:submit.prevent="add_or_edit(); enable_edit();" action="#"
+              enctype="multipart/form-data" method="post"
               v-if="!add_post_button.display">
             <div class="form-group text-right" id="submit_record__row">
                 <input class="btn btn-primary btn-sm post-button mybtn-width" type="submit" value="Post"/>
@@ -64,15 +71,19 @@
         <!--POSTS Listing-->
         <div class="post_list">
             <div v-for="p in posts" class="post text-left">
-                <post :title="p.title"
+                <post :post="p"
+                      :title="p.title"
                       :content="p.content"
                       :author="p.author"
                       :author_email="p.author_email"
                       :date_created="p.date_created"
                       :date_updated="p.date_updated"
                       :user_email="user_email"
-                      :add_post_button="add_post_button"
-                      :button_toggle="button_toggle"></post>
+                      :edit_post="edit_post"
+                      :clear_form="clear_form"
+                      :editing="editing"
+                      :action="action"
+                      :id="p.id"></post>
             </div>
         </div>
         <div v-if="has_more" class="text-center">

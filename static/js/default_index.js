@@ -34,7 +34,30 @@ var app = function () {
 
     //---------------------------------------
 
+    self.action = function (id) {
+        if (id == 0){
+            self.vue.action_post = 0;
+        } else {
+            self.vue.action_post = id;
+        }
+    };
 
+    self.add_or_edit = function () {
+        if (self.vue.action_post == 0){
+            self.add_post();
+        } else {
+            self.update_post();
+        }
+    };
+
+    self.disable_edit = function () {
+        self.vue.editing = true;
+    };
+    self.enable_edit = function () {
+        self.vue.editing = false;
+    };
+
+//Does not need to be a vue object method but it might be so leave it here
     self.add_post = function () {
         $.post(add_post_url,
             {
@@ -42,14 +65,39 @@ var app = function () {
                 content: self.vue.form_content//.replace(/(?:\r\n|\r|\n)/g, '\t\n')
             },
             function (data) {
-                console.log(typeof(data.post))
+                console.log('add post success');
                 self.vue.posts.unshift(data.post);
                 enumerate(self.vue.posts);
+                self.vue.action_post = 0;
                 self.button_toggle(self.vue.add_post_button);
                 // clear form values
                 console.log('form cleared');
-                self.vue.form_title = null;
-                self.vue.form_content = null;
+                self.clear_form();
+            }
+        );
+    };
+
+    self.update_post = function () {
+        $.post(update_post_url,
+            {
+                title: self.vue.form_title,
+                content: self.vue.form_content,//.replace(/(?:\r\n|\r|\n)/g, '\t\n')
+                id: self.vue.action_post
+            },
+            function (data) {
+                console.log(self.vue.action_post + ' success');
+                for(i=0; i < self.vue.posts.length; i++){
+                    if (self.vue.posts[i].id == data.post.id){
+                        self.vue.posts[i].title = data.post.title;
+                        self.vue.posts[i].content = data.post.content;
+                        break;
+                    }
+                }
+                enumerate(self.vue.posts); // do not need but leave it
+                self.button_toggle(self.vue.add_post_button);
+                // clear form values
+                console.log('form cleared');
+                self.clear_form();
             }
         );
     };
@@ -59,24 +107,40 @@ var app = function () {
         var add_posts_num = 4;
         $.getJSON(get_posts_url(num_posts, num_posts + add_posts_num),
             function (data) {
-            self.vue.has_more = data.has_more;
-            self.vue.logged_in = data.logged_in;
-            self.extend(self.vue.posts, data.posts);
-            enumerate(self.vue.posts);
-        });
+                self.vue.has_more = data.has_more;
+                self.vue.logged_in = data.logged_in;
+                self.extend(self.vue.posts, data.posts);
+                enumerate(self.vue.posts);
+            });
     };
 
     self.button_toggle = function (button) {
-        button.display = !button.display
+        button.display = !button.display;
     };
 
     self.get_user_name_email = function () {
         $.post(get_user_and_email_url,
             function (data) {
                 self.vue.user_name = data.user_name,
-                self.vue.user_email = data.user_email
+                    self.vue.user_email = data.user_email
             }
         );
+    }
+
+    self.edit_post = function (title, content) {
+        self.button_toggle(self.vue.add_post_button);
+        self.vue.form_title = title;
+        self.vue.form_content = content;
+        self.vue.editing = !self.vue.editing;
+        if (self.vue.editing == false) {
+            self.vue.form_title = null;
+            self.vue.form_content = null;
+        }
+    }
+
+    self.clear_form = function () {
+        self.vue.form_title = null;
+        self.vue.form_content = null;
     }
 
 
@@ -89,10 +153,12 @@ var app = function () {
             logged_in: false,
             has_more: false,
             add_post_button: {  //using dict.attr can pass by reference
-                display: true
+                display: true,
             },
             posts: [],
             //contain:  id, title, content, author, date_created, date_updated, author_email, _idx(from enumerate())
+            editing: false,
+            action_post: 0,
             form_title: null,
             form_content: null,
             user_name: null,
@@ -102,20 +168,26 @@ var app = function () {
             get_more: self.get_more,
             add_post: self.add_post,
             button_toggle: self.button_toggle,
-            get_user_name_email: self.get_user_name_email
+            get_user_name_email: self.get_user_name_email,
+            edit_post: self.edit_post,
+            clear_form: self.clear_form,
+            disable_edit: self.disable_edit,
+            enable_edit: self.enable_edit,
+            action: self.action,
+            add_or_edit: self.add_or_edit
         }
     });
 
 
     Vue.component('post', {
-        props: ['title', 'content', 'author', 'author_email',
-                'date_created', 'date_updated', 'is_author_return_edit',
-                'user_email', 'add_post_button', 'button_toggle'],
-        template: ' <div>\
+        props: ['post', 'title', 'content', 'author', 'author_email',
+            'date_created', 'date_updated', 'is_author_return_edit',
+            'user_email', 'edit_post', 'clear_form', 'editing', 'action', 'id'],
+        template: ' <div class="post-content">\
                     <div class="post_title">{{title}}</div>\
                     <div class="post_content">{{content}}\
                         <div  class="edit_icon" v-if="user_email==author_email">\
-                            <a href="#" v-on:click="button_toggle(add_post_button)">\
+                            <a href="#" v-on:click="edit_post(title, content); action(id); " v-if="!editing">\
                                 <i class="fa fa-pencil icon"></i>\
                             </a>\
                             <a>\

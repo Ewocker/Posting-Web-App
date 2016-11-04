@@ -27,9 +27,11 @@
     }
     .post_content {
       font-family: 'Indie Flower', cursive;
+      width: 450px;
       font-size: 18px;
       font-weight: 100;
       color: #001f3f;
+      overflow: scroll;
     }
     .meta {
       font-family: 'Josefin Sans', sans-serif;
@@ -44,7 +46,7 @@
       color: #303030;
       text-shadow: 1px 1px 1px #ccc;
       .icon{
-        margin: 4px;
+        margin: 0 0 0 8px;
       }
     }
   }
