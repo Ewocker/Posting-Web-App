@@ -25,11 +25,6 @@ def index():
     """
     This is your main controller.
     """
-    # I am creating a bogus list here, just to have some divs appear in the
-    # view.  You need to read at most 20 posts from the database, in order of
-    # most recent first, and you need to return that list here.
-    # Note that posts is NOT a list of strings in your actual code; it is
-    # what you get from a db(...).select(...).
 
     # # Test
     # db.post.truncate()
@@ -45,14 +40,6 @@ def index():
     # db.post.insert(post_title="DUMMY TITLE10", post_content="dummy content!", user_email="Default Author")
     #
 
-    # posts = db(db.post).select()
-    #
-    # return dict(posts=posts,
-    #             user_name=get_user_name_from_email,
-    #             convertTime=convertTime,
-    #             isAuther= isAuther,
-    #             updateTime=updateTime,
-    #             timeCompare=timeCompare)
     return dict()
 
 @auth.requires_login()

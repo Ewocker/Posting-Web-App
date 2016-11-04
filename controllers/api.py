@@ -27,43 +27,6 @@ def isEdited(p):
         return True
 
 
-# def timeCompare(p):
-#     if not isEdited(p): return ''
-#     t = p.updated_on
-#     delta = datetime.datetime.utcnow() - t
-#     print(delta)
-#     time = 'Edited '
-#     year = delta.days // 365
-#     month = delta.days // 30
-#     week = delta.days // 7
-#     minute = delta.seconds // 60
-#     hour = minute // 60
-#     if year > 0:
-#         time += str(year)
-#         time + - 'year ' if year == 1 else 'years '
-#     elif month > 0:
-#         time += str(month)
-#         time += 'month ' if month == 1 else 'months '
-#     elif week > 0:
-#         time += str(week)
-#         time += 'week ' if week == 1 else 'weeks '
-#     elif delta.days is not 0:
-#         time += str(delta.days)
-#         time += 'day ' if delta.days == 1 else 'days '
-#     elif hour > 0:
-#         time += str(hour)
-#         time += 'hour ' if hour == 1 else 'hours '
-#     elif minute > 0:
-#         time += str(minute)
-#         time += 'minute ' if minute == 1 else 'minutes '
-#     elif delta.seconds is not 0:
-#         time += str(delta.seconds)
-#         time += 'second ' if delta.seconds == 1 else 'seconds '
-#     else:
-#         time += 'few secs'
-#     return time + ' ago'
-
-
 def post_response(post_obj):
     p = dict(
         id=post_obj.id,
